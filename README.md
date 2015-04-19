@@ -6,3 +6,5 @@ Part of the integration with DHT11 code  (pi_2_dht_read.c) is based on [Adafruit
 The library will power up the sensor (it will detect if the sensor is not connected!), read the temperature and humidity values. It will then store the values into a rrdtool based round robin database with enough values to get a trend for whole year.
 
 A cron job executes the library everyminute, and the PHP gets the data using `rrdtool lastupdate` method.
+
+My current version can be accessed at http://raspberrypi.adystech.com/sysinfo.php
