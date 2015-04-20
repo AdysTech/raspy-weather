@@ -57,7 +57,7 @@ int pi_2_dht_read(int pin, float* humidity, float* temperature) {
 	// Make sure array is initialized to start at zero.
 	int bitPulseCounts[DHT_PULSES] = { 0 };
 
-	int timingPulseCounts[DHT_PULSES + 3] = { 0 };
+	int timingPulseCounts[3] = { 0 };
 
 	// Set pin to output.
 	pi_2_mmio_set_output(pin);
@@ -114,11 +114,13 @@ int pi_2_dht_read(int pin, float* humidity, float* temperature) {
 	//during data transfer, 0 is ~26uS, and 1 is ~70uS of HIGH which follows 50uS of low
 	//Every bit is 50uS low + 26-70uS High. 
 
+	
 	// Record pulse widths for the expected result bits.
 	for (int i = 0; i < DHT_PULSES; i++) {
+		volatile int timingCounter=0;	
 		// Count how long pin is low and store in bitPulseCounts[i] should be ~50uS
 		while (!pi_2_mmio_input(pin)) {
-			if (++timingPulseCounts[i + 3] >= DHT_MAXCOUNT) {
+			if (++timingCounter >= DHT_MAXCOUNT) {
 				// Timeout waiting for response.
 				set_default_priority();
 				return DHT_ERROR_TIMEOUT;
