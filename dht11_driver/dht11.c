@@ -39,13 +39,13 @@ void power_on_dht11()
 
 	//sleep_milliseconds(200);
 	volatile int t = 0;
-	while (!pi_2_mmio_input(SIGNAL_PIN)){
+	//wait for GPIO to change and DHT11 to power on. Signal pin on DHT11 should have a pullup, so on powerup, it should be high
+	while (!pi_2_mmio_input(SIGNAL_PIN))
+	{
 		t++;
 		if (t > 200) break;
 	}
-	if (t > 200)
-		//singal pin should have a pullup, so on powerup, it should be high
-		//if(!pi_2_mmio_input(SIGNAL_PIN))
+	if (t > 200)		
 	{
 		printf("DHT11 was not detected!! \nMake sure the sensor is connected and there is a 4.7k pullup between +ve and signal pins.\n");
 		pi_2_mmio_set_low(POWER_PIN);
