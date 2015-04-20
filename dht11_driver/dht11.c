@@ -1,12 +1,5 @@
-//
-//  How to access GPIO registers from C-code on the Raspberry-Pi
-//  Example program
-//  15-January-2012
-//  Dom and Gert
-//  Revised: 15-Feb-2013
-
-
-// Access from ARM Running Linux
+// Copyright (c) 2015 Adys Tech
+// Author: Adarsha (mvadu)
 
 #define GPIO_BASE_OFFSET 0x200000
 #define GPIO_LENGTH 4096
