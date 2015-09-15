@@ -29,7 +29,7 @@ install: all
 		cp ./dht11 /etc/dht11/
 		cp ./dht11_rrd /etc/dht11/
 		echo add Cron job
-		crontab -l | grep -q '#dht11_job' ||  crontab -l; echo echo "* * * * * /etc/dht11/dht11_rrd > /tmp/dht11.log 2>&1 #dht11_job"  | crontab -;
+		crontab -l | grep -q '#dht11_job' ||  crontab -l; echo "* * * * * /etc/dht11/dht11_rrd > /tmp/dht11.log 2>&1 #dht11_job"  | crontab -;
 		echo Done!!
 
 .PHONY: clean
