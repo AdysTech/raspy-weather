@@ -178,9 +178,11 @@ int pi_2_dht_read(int pin, float* humidity, float* temperature) {
 	// Verify checksum of received data.
 	if (data[4] == ((data[0] + data[1] + data[2] + data[3]) & 0xFF)) {
 		// Get humidity and temp for DHT11 sensor.
-		*humidity = (float)data[0];
-		*temperature = (float)data[2];
-
+		//*humidity = (float)data[0];
+		//*temperature = (float)data[2];
+		*humidity = ParseFloat(data[0],data[1]);
+		*temperature =ParseFloat(data[2],data[3]);
+		
 		return DHT_SUCCESS;
 	}
 	else {
@@ -207,3 +209,10 @@ double humidex(double tempC, double DewPoint)
   return h;
 }
 
+float ParseFloat(uint8_t intData, uint8_t fractionData)
+{
+	float val=fractionData * 1.0f;
+	while(val>1)
+		val/=10.0;
+	return val + (float)intData;
+}

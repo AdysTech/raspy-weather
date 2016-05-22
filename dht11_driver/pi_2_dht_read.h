@@ -30,6 +30,7 @@
 int pi_2_dht_read(int pin, float* humidity, float* temperature);
 double dewPointFast(double celsius, double humidity);
 double humidex(double tempC, double DewPoint);
+float ParseFloat(uint8_t intData, uint8_t fractionData);
 #endif
 
 
