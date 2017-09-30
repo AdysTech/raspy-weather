@@ -69,7 +69,7 @@ int main(int argc, char **argv)
 	double dP = dewPointFast(temperature, humidity);
 	double hI = humidex(temperature, dP);
 	
-	printf("DHT11 out\tTemp:\t%f\tHumidity:\t%f\tDP:\t%f\tHI:\t%f\n", temperature, humidity,dP,hI );
+	printf("DHT11 out\nTemp:\t%f\nHumidity:\t%f\nDP:\t%f\nHI:\t%f\n", temperature, humidity,dP,hI );
 
 	//poweroff sensor
 	pi_2_mmio_set_low(POWER_PIN);
