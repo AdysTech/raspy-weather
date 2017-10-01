@@ -185,21 +185,25 @@ float HTU21D::calculateDewPoint(float temp, float humid) {
 
 }
 
-//ref: http://www.weather.gov/media/epz/wxcalc/heatIndex.pdf
-// Indexheat = − 42.379 + (2.04901523 * T) + (10.14333127 * rh)
-//    − (0.22475541 * T * rh) − (6.83783 * 10^−3 * T^2)
-//    − (5.481717 * 10^−2 * rh^2) + (1.22874 * 10^−3 * T^2 * rh)
-//    + (8.5282 * 10^−4 * T * rh^2) − (1.99 * 10^−6 * T^2 * rh^2)
+//ref: http://www.wpc.ncep.noaa.gov/html/heatindex_equation.shtml
 
 float HTU21D::calculateHeatIndex(float temp, float rh) {
         //convert temp to fahrehneit  
         float T = 9.0/5.0 * temp + 32;
-    
-        float heatIndex = -42.379 + (2.04901523 * T) + (10.14333127 * rh)
-        -(0.22475541 * T * rh) -( 0.00683783 * pow(T,2))
-        -(0.05481717 * pow(rh,2)) + (0.00122874 * pow(T,2) * rh)
-        + (0.00085282 * T * pow(rh,2)) -(1.99 * pow(10, -6) * pow(T,2) * pow(rh,2));
-     
+        
+        //this simple formula is computed first, if it's 80 degrees F or higher, the full regression equation along with any adjustment is applied. 
+        float heatIndex = 0.5 * (T + 61.0 + ((T-68.0)*1.2) + (rh*0.094));
+
+        if(heatIndex > 80) {
+            float heatIndex = -42.379 + 2.04901523*T + 10.14333127*rh - .22475541*T*rh 
+                              - .00683783*T*T - .05481717*rh*rh + .00122874*T*T*rh 
+                              + .00085282*T*rh*rh - .00000199*T*T*rh*rh;
+            if(rh < 13 && T > 80 && T < 112){
+                heatIndex -= ((13-rh)/4)*sqrt((17-(T>95.0?T-95.0:95.0-T))/17);
+            } else if(rh>85 && T>80 && T<87) {
+                heatIndex += ((rh-85)/10) * ((87-T)/5); 
+            }
+        }
         //convert back to celsius
         return (5.0/9.0 * (heatIndex -32));
 }    
