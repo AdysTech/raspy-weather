@@ -33,9 +33,10 @@ int main(int argc, char **argv) {
         d = ToFahrehneit (d);
         hi = ToFahrehneit(hi);
     }
-    printf("Temperature: %.2f\n", t);
-    printf("Relative Humidity: %.2f\n",rh );
-    printf("Dew Point: %.2f\n",d);
-    printf("Heat Index: %.2f\n",hi);
+    const char* unit = (fahrehneit?"Fahrehneit":"Celsius");
+    printf("Temperature\t%.2f\t%s\n", t,unit);
+    printf("Relative Humidity\t%.2f\tPercentage\n",rh );
+    printf("Dew Point\t%.2f\t%s\n",d,unit);
+    printf("Heat Index\t%.2f\t%s\n",hi,unit);
     return 1;
 }
