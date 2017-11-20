@@ -1,6 +1,9 @@
 #!/bin/bash
 epoch=$(date +'%s')
 
+curl -i -XPOST http://localhost:8086/query --data-urlencode "q=CREATE DATABASE environment"
+
+
 value="weather,sensor=$2,region=$1"
 output=""
 while read x

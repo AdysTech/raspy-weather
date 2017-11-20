@@ -2,7 +2,7 @@
 #include <string.h> 
 #include <stdint.h>
 
-#include "HTU21D.h"
+#include "htu21d.h"
 
 #define ToFahrehneit(temp) (9.0/5.0 * temp + 32)
 
